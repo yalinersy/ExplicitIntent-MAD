@@ -33,98 +33,72 @@ Program to print the text “ExplicitIntent”.
 Developed by: Sri Yaline R
 Registeration Number : 212224040325
 */
+```
 
 MainActivity.Java
-
+```
 package com.example.myapplication;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+    }
 
-        EditText etNum1 = findViewById(R.id.etNum1);
-        EditText etNum2 = findViewById(R.id.etNum2);
-        Button btnGo = findViewById(R.id.btnGo);
-
-        btnGo.setOnClickListener(v -> {
-            String val1 = etNum1.getText().toString();
-            String val2 = etNum2.getText().toString();
-
-            if (!val1.isEmpty() && !val2.isEmpty()) {
-                int n1 = Integer.parseInt(val1);
-                int n2 = Integer.parseInt(val2);
-                int sum = n1 + n2;
-
-                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-                intent.putExtra("SUM_RESULT", sum);
-                startActivity(intent);
-            }
-        });
+    public void newsScreen(View view) {
+        Intent i = new Intent(getApplicationContext(), MainActivity2.class);
+        startActivity(i);
     }
 }
+```
 
 
-SecondActivity.Java
-
+MainActivity2.Java
+```
 package com.example.myapplication;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.View;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
+import com.example.myapplication.R;
 
-public class SecondActivity extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_second);
+        setContentView(R.layout.activity_main2);
+    }
 
-        TextView tvResult = findViewById(R.id.tvResult);
-        
-        // Receive the data from Intent
-        int result = getIntent().getIntExtra("SUM_RESULT", 0);
-        tvResult.setText(getString(R.string.sum_result, result));
-
-        // Button click → Go back to MainActivity
-        Button btnGoBack = findViewById(R.id.btnGoBack);
-        btnGoBack.setOnClickListener(v -> {
-            finish();
-        });
+    public void homeScreen(View view) {
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(i);
     }
 }
-
+```
 
 activity_main.xml
-
+```
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <!-- Title -->
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/explicit_intent"
@@ -136,58 +110,33 @@ activity_main.xml
         android:layout_marginTop="50dp"/>
 
     <TextView
-        android:id="@+id/tvSubtitle"
-        android:layout_width="wrap_content"
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/first_activity"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/textView1"
+        android:text="Welcome to Home Screen"
+        android:textAlignment="center"
+        android:textSize="28sp"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="32dp" />
 
-    <EditText
-        android:id="@+id/etNum1"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/enter_first_number"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:minHeight="48dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <EditText
-        android:id="@+id/etNum2"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/enter_second_number"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:minHeight="48dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/etNum1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- Button -->
     <Button
-        android:id="@+id/btnGo"
+        android:id="@+id/btn1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_and_go"
-        android:minHeight="48dp"
-        app:layout_constraintTop_toBottomOf="@id/etNum2"
-        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="newsScreen"
+        android:text="Go to New Screen"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintVertical_bias="0.112" />
 </androidx.constraintlayout.widget.ConstraintLayout>
-
+```
 
 activity_second.xml
-
+```
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -195,7 +144,7 @@ activity_second.xml
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SecondActivity">
+    tools:context=".MainActivity2">
 
     <!-- Title -->
     <TextView
@@ -232,12 +181,13 @@ activity_second.xml
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="50dp"/>
 
-    <!-- Button -->
+
     <Button
         android:id="@+id/btnGoBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/go_to_home"
+        android:onClick="homeScreen"
         app:layout_constraintTop_toBottomOf="@id/tvResult"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -246,9 +196,9 @@ activity_second.xml
 ```
 
 ## OUTPUT
-<img width="1920" height="1200" alt="Screenshot 2026-04-28 204831" src="https://github.com/user-attachments/assets/b1c0f05b-dfde-4183-b053-6437463134d8" />
-<img width="1920" height="1200" alt="Screenshot 2026-04-28 204839" src="https://github.com/user-attachments/assets/5e3ca9a0-cdd6-4374-b9ce-df513d094e49" />
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/442c0b5c-e1ff-4f05-ab2e-0f5a13ea5c3d" />
 
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/66e55329-0bee-4f89-916a-84206fe46954" />
 
 
 
